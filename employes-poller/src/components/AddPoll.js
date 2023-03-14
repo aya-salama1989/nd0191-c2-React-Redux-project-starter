@@ -31,12 +31,11 @@ const AddPoll = ({ dispatch, authedUser }) => {
   const handleAddNewPoll = (e) => {
     e.preventDefault();
 
+
     const newPoll = {
-      id: generateUID(),
       author: authedUser,
-      timeStamp:getCurrentTimestamp(),
-      optionOne:{text: firstOptionText},
-      optionTwo:{text: secondOptionText}
+      optionOneText: firstOptionText,
+      optionTwoText: secondOptionText
     };
 
     console.log("e.value: ", newPoll);
@@ -44,10 +43,10 @@ const AddPoll = ({ dispatch, authedUser }) => {
 
     dispatch(handleAddPoll(newPoll));
 
-    // setFirstOptionText("");
-    // setSecondOptionText("");
+    setFirstOptionText("");
+    setSecondOptionText("");
 
-    // navigate("/");
+    navigate("/");
   };
   return (
     <div>

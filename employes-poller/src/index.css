@@ -19,22 +19,22 @@ code {
 
 }
 
-.poll-list-item span{
+.poll-list-item span {
   display: block;
   align-self: center;
   margin-bottom: 1%;
 }
 
-.poll-item:hover{
+.poll-item:hover {
   background-color: #e1c7c7;
 }
 
-.poll-item.active{
+.poll-item.active {
   background-color: #ccc;
 }
 
 
-.add-poll-input{
+.add-poll-input {
   display: block;
   align-self: center;
   margin-bottom: 1%;
@@ -46,8 +46,8 @@ ul.no-bullets {
   margin: 0;
   padding: 0;
 }
- 
-ul.no-bullets li{
+
+ul.no-bullets li {
   border-radius: 15px;
   display: inline-block;
   vertical-align: middle;
@@ -82,5 +82,30 @@ ul.no-bullets li{
 /* Create an active/current tablink class */
 .tab button.active {
   background-color: #ccc;
+}
+
+
+
+
+.third {
+  width: 30%;
+  margin: 0;
+  display: inline-block;
+}
+
+.twoThird {
+  width: 60%;
+  margin: 5%;
+  display: inline-block;
+}
+
+
+.avatar {
+  height: 150px;
+  border-radius: 25px;
+  margin: 10px;
+  padding: 3px;
+  border: #ef0707;
+  border-width: 3px;
 }
 

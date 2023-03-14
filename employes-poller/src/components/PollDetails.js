@@ -12,45 +12,120 @@
 
 import { connect } from "react-redux";
 import User from "./User";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+
+const withRouter = (Component) => {
+  const ComponentWithRouterProp = (props) => {
+    let location = useLocation();
+    let navigate = useNavigate();
+    let params = useParams();
+    return <Component {...props} router={{ location, navigate, params }} />;
+  };
+
+  return ComponentWithRouterProp;
+};
 
 const PollDetails = (props) => {
-  if (props.poll === null) {
-    return <p>There is not such Poll, please try again for a valid one</p>;
+  const currentPoll = props.polls[props.pollId];
+  const pollCreator = props.users[currentPoll.author];
+
+  const [isChecked, setChecked] = useState(true);
+
+  if (currentPoll === null || currentPoll === undefined) {
+    return (
+      <div>
+        <h1>501 Not Available</h1>
+        <p>There is not such Poll, please try again for a valid one</p>
+      </div>
+    );
   }
+
+  const authedUserData = props.users[props.authedUser];
+  const answered = Object.keys(authedUserData.answers).includes(currentPoll.id);
+
+  const totalNumberOfVotes =
+    currentPoll.optionOne.votes.length + currentPoll.optionTwo.votes.length;
+  const optionOneVotesPercentage = Math.round(
+    (currentPoll.optionOne.votes.length / totalNumberOfVotes) * 100
+  );
+  const optionTwoVotesPercentage = Math.round(
+    (currentPoll.optionTwo.votes.length / totalNumberOfVotes) * 100
+  );
+
+  const handleOnCheckChange = (e) => {
+    console.log(e.target.value);
+    const optionId = currentPoll.id;
+    console.log("answer value: ",  authedUserData.answers.get(optionId));
+
+    if(e.target.value === authedUserData.answers[currentPoll.id]){
+      setChecked(true)
+    }else{
+      setChecked(false)
+    }
+  };
 
   return (
     <div className="poll-detail">
-      <div id="poll-detail-user-div">
-        <User />
+      <div id="poll-detail-user-div" className="third">
+        <User userData={pollCreator} />
       </div>
-      <div id="poll-detail-div">
+      <div id="poll-detail-div" className="twoThird">
         <h3>Would You Rather</h3>
-        <input type="checkbox"> </input>
-        <input type="checkbox"> </input>
+        <input
+          type="checkbox"
+          value="optionOne"
+          disabled={answered}
+          onChange={handleOnCheckChange}
+          id="cb-optionOne"
+          checked ={isChecked}
+        />
+        <span>{currentPoll.optionOne.text}</span>
+        {answered ? (
+          <span
+            className="span-statistic"
+            style={{ display: answered ? "block" : "none" }}
+          >
+            , answered by {currentPoll.optionOne.votes.length} users,{" "}
+            {optionOneVotesPercentage}% of all users
+          </span>
+        ) : (
+          false
+        )}
+
+        <hr />
+        <input
+          type="checkbox"
+          value="optionTwo"
+          disabled={answered}
+          onChange={handleOnCheckChange}
+          id="cb-optionTwo"
+          checked ={isChecked}
+
+        />
+        <span>{currentPoll.optionTwo.text}</span>
+        {answered ? (
+          <span className="span-statistic">
+            , answered by {currentPoll.optionTwo.votes.length} users,{" "}
+            {optionTwoVotesPercentage}% of all users{" "}
+          </span>
+        ) : (
+          false
+        )}
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({ users, polls, authedUser }, { pollId }) => {
+const mapStateToProps = ({ users, polls, authedUser }, props) => {
+  const pollId = props.router.params.id;
 
-  console.log("polls[pollId]: ", pollId);
-  console.log("polls[pollId]: ", polls);
-  console.log("polls[pollId]: ", users);
-
-
-  const poll = polls[pollId] ? polls[pollId] : null;
-
-
-  const pollCreator = users[poll.author];
-  const autherizedUser = users[authedUser];
-
-  console.log("PollDetails: ", pollId);
   return {
-    poll,
-    pollCreator,
-    autherizedUser,
+    pollId,
+    polls,
+    users,
+    authedUser,
   };
 };
 
-export default connect(mapStateToProps)(PollDetails);
+export default withRouter(connect(mapStateToProps)(PollDetails));

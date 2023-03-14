@@ -1,18 +1,17 @@
 //Avatar, name, number of answes and number of questions per user
 
-const User = () => {
+const User = ({userData}) => {
+  console.log("userData", userData);
   return (
     <div>
-      <div
-        className="contact-avatar"
-        style={{
-          backgroundImage: `url(${"https://raw.githubusercontent.com/AboutReact/sampleresource/master/old_logo.png"})`,
-        }}
-      ></div>
-      <h6>{"name: any name"}</h6>
-      <span>{"Questions: 4"}</span>
-      <span>{"Answers: 12"}</span>
+    <img src={'https://gravatar.com/avatar/984cd6ea2ab7a97be50364e928f88986?s=400&d=robohash&r=x'} alt={`Avatar of user`} className="avatar" />
+
+      <h4>{`Name: ${userData.name}`}</h4>  
       <span>{"Rating: 1"}</span>
+      <hr/>
+      <span>{`Questions: ${userData.questions.length}`}</span>
+      <hr/>
+      <span>{`Answers: ${Object.keys(userData.answers).length}`}</span> 
     </div>
   );
 };
