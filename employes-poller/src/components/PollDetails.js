@@ -30,7 +30,7 @@ const PollDetails = (props) => {
   const currentPoll = props.polls[props.pollId];
   const pollCreator = props.users[currentPoll.author];
 
-  const [isChecked, setChecked] = useState(true);
+  const [isChecked, setCheckedAnswer] = useState("");
 
   if (currentPoll === null || currentPoll === undefined) {
     return (
@@ -53,16 +53,25 @@ const PollDetails = (props) => {
     (currentPoll.optionTwo.votes.length / totalNumberOfVotes) * 100
   );
 
+  let selectedAnswer = null;
+
+  if (answered) {
+    const answersMap = new Map();
+    for (const [key, value] of Object.entries(authedUserData.answers)) {
+      answersMap.set(key, value);
+    }
+
+    const currentPullId = currentPoll.id;
+
+    if (answersMap.has(currentPullId)) {
+      selectedAnswer =  answersMap.get(currentPullId);
+    }
+    
+  }
+
   const handleOnCheckChange = (e) => {
     console.log(e.target.value);
-    const optionId = currentPoll.id;
-    console.log("answer value: ",  authedUserData.answers.get(optionId));
-
-    if(e.target.value === authedUserData.answers[currentPoll.id]){
-      setChecked(true)
-    }else{
-      setChecked(false)
-    }
+    //onHandleCheck, show statistics and disable user interaction
   };
 
   return (
@@ -78,7 +87,7 @@ const PollDetails = (props) => {
           disabled={answered}
           onChange={handleOnCheckChange}
           id="cb-optionOne"
-          checked ={isChecked}
+          checked={isChecked}
         />
         <span>{currentPoll.optionOne.text}</span>
         {answered ? (
@@ -100,8 +109,7 @@ const PollDetails = (props) => {
           disabled={answered}
           onChange={handleOnCheckChange}
           id="cb-optionTwo"
-          checked ={isChecked}
-
+          checked={selectedAnswer === value}
         />
         <span>{currentPoll.optionTwo.text}</span>
         {answered ? (
