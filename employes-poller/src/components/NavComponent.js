@@ -8,10 +8,10 @@ const NavComponent = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/new">Add New Poll</Link>
+          <Link to="/add">Add New Poll</Link>
         </li>
         <li>
-          <Link to="/leaders">Leaders Board</Link>
+          <Link to="/leaderboard">Leaders Board</Link>
         </li>
       </ul>
     </nav>

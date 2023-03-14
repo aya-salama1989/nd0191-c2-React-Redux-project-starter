@@ -9,9 +9,9 @@ const User = ({userData}) => {
       <h4>{`Name: ${userData.name}`}</h4>  
       <span>{"Rating: 1"}</span>
       <hr/>
-      <span>{`Questions: ${userData.questions.length}`}</span>
+      <span>{`Asked Questions: ${userData.questions.length}`}</span>
       <hr/>
-      <span>{`Answers: ${Object.keys(userData.answers).length}`}</span> 
+      <span>{`Answered Questions: ${Object.keys(userData.answers).length}`}</span> 
     </div>
   );
 };

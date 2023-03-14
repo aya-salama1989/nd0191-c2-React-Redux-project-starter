@@ -24,8 +24,8 @@ function App(props) {
           <Routes>
             <Route path="/" exact element={<PollsList />} />
             <Route path="/poll/:id" element={<PollDetails />} />
-            <Route path="/new" element={<AddPoll />} />
-            <Route path="/leaders" element={<Leaders />} />
+            <Route path="/add" element={<AddPoll />} />
+            <Route path="/leaderboard" element={<Leaders />} />
             <Route path="/login" exact element={<Login />} />
           </Routes>
         )}
