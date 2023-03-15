@@ -4,6 +4,7 @@
 import { connect } from "react-redux";
 import PollItem from "./PollItem";
 import { useState } from "react";
+import NavComponent from "./NavComponent";
 
 const PollsList = (props) => {
   const [polls, setPolls] = useState(props.unAnsweredPolls);
@@ -25,6 +26,7 @@ const PollsList = (props) => {
 
   return (
     <div>
+      <NavComponent />
       <div className="tab">
         <button className="tablinks" onClick={showAnsweredPolls}>
           Answered Polls
@@ -37,8 +39,12 @@ const PollsList = (props) => {
       <div className="lists">
         <ul>
           {polls.map((pollId) => (
-            <li key={pollId} className = "poll-item" onClick={handlePollItemClick}>
-              <PollItem pollId={pollId}  />
+            <li
+              key={pollId}
+              className="poll-item"
+              onClick={handlePollItemClick}
+            >
+              <PollItem pollId={pollId} />
             </li>
           ))}
         </ul>
@@ -50,10 +56,9 @@ const PollsList = (props) => {
 const mapStateToProps = ({ polls, authedUser, users }) => {
   const user = users[authedUser];
   const authedUserAnsweredPolls = Object.keys(user.answers);
-  const sortedPolls = Object.keys(polls).sort(
-    (a, b) => polls[b].timestamp - polls[a].timestamp
-  );
-
+  const sortedPolls = Object.keys(polls).sort((a, b) => {
+    return polls[b].timestamp - polls[a].timestamp;
+  });
 
   return {
     answeredPolls: sortedPolls.filter((pollId) =>

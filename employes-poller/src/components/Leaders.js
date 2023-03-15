@@ -1,15 +1,31 @@
 import { connect } from "react-redux";
+import User from "./User";
 
-const Leaders = ( props ) => {
-  console.log(props.users);
+const Leaders = (props) => {
+  console.log(props.rankedUsers);
 
-  return <li>What </li>;
+  return (
+    <ul>
+      {Object.values(props.rankedUsers).map((user, i) => (
+        <User userData={user} ranking={i + 1} key={user.id} />
+      ))}
+    </ul>
+  );
 };
 
 const mapStateToProps = ({ users }) => {
-  console.log("users: ", users);
+  const rankedUsers = users
+  
+  // Object.values(users).sort((user1, user2) => {
+  //   const secondUserRank =
+  //     Object.keys(user2.answers).length + user2.questions.size;
+  //   const firstUserRank =
+  //     Object.keys(user1.answers).length + user1.questions.size;
+  //   return  secondUserRank > firstUserRank;
+  // });
+
   return {
-    users,
+    rankedUsers,
   };
 };
 

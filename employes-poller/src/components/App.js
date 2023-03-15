@@ -2,7 +2,6 @@ import PollsList from "./PollsList";
 import { handleInitialData } from "../actions/Shared";
 import { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
-import NavComponent from "./NavComponent";
 import { LoadingBar } from "react-redux-loading-bar";
 import { Route, Routes } from "react-router";
 import PollDetails from "./PollDetails";
@@ -11,24 +10,24 @@ import Leaders from "./Leaders";
 import Login from "./Login";
 
 function App(props) {
+
   useEffect(() => {
     props.dispatch(handleInitialData());
-  }, []);
+  });
 
-  return (
+  return props.loading === true ? (
+    <Login />
+  ) : (
     <Fragment>
       <LoadingBar />
       <div className="container">
-        <NavComponent />
-        {props.loading === true ? null : (
-          <Routes>
-            <Route path="/" exact element={<PollsList />} />
-            <Route path="/poll/:id" element={<PollDetails />} />
-            <Route path="/add" element={<AddPoll />} />
-            <Route path="/leaderboard" element={<Leaders />} />
-            <Route path="/login" exact element={<Login />} />
-          </Routes>
-        )}
+        <Routes>
+          <Route path="/" exact element={<PollsList />} />
+          <Route path="/poll/:id" element={<PollDetails />} />
+          <Route path="/add" element={<AddPoll />} />
+          <Route path="/leaderboard" element={<Leaders />} />
+          <Route path="/login" exact element={<Login />} />
+        </Routes>
       </div>
     </Fragment>
   );

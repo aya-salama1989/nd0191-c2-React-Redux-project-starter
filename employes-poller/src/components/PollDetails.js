@@ -12,37 +12,33 @@
 
 import { connect } from "react-redux";
 import User from "./User";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
-
-const withRouter = (Component) => {
-  const ComponentWithRouterProp = (props) => {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    return <Component {...props} router={{ location, navigate, params }} />;
-  };
-
-  return ComponentWithRouterProp;
-};
+import { useState, useEffect } from "react";
+import { withRouter } from "../utils/helpers";
+import Error from "./Error";
 
 const PollDetails = (props) => {
+  const [myAnswer, setMyAnswer] = useState(null);
+
+  useEffect(() => {
+    const answersMap = new Map();
+    if (answered) {
+      for (const [key, value] of Object.entries(authedUserData.answers)) {
+        answersMap.set(key, value);
+      }
+    }
+    const userAnswer = answersMap.get(currentPoll.id);
+    setMyAnswer(userAnswer);
+  }, []);
+
   const currentPoll = props.polls[props.pollId];
   const pollCreator = props.users[currentPoll.author];
 
-  const [isChecked, setCheckedAnswer] = useState("");
-
-  if (currentPoll === null || currentPoll === undefined) {
-    return (
-      <div>
-        <h1>404 Not Available</h1>
-        <p>There is not such Poll, please try again for a valid one</p>
-      </div>
-    );
-  }
-
   const authedUserData = props.users[props.authedUser];
   const answered = Object.keys(authedUserData.answers).includes(currentPoll.id);
+
+  if (currentPoll === null || currentPoll === undefined) {
+    return <Error />;
+  }
 
   const totalNumberOfVotes =
     currentPoll.optionOne.votes.length + currentPoll.optionTwo.votes.length;
@@ -52,22 +48,6 @@ const PollDetails = (props) => {
   const optionTwoVotesPercentage = Math.round(
     (currentPoll.optionTwo.votes.length / totalNumberOfVotes) * 100
   );
-
-  let selectedAnswer = null;
-
-  if (answered) {
-    const answersMap = new Map();
-    for (const [key, value] of Object.entries(authedUserData.answers)) {
-      answersMap.set(key, value);
-    }
-
-    const currentPullId = currentPoll.id;
-
-    if (answersMap.has(currentPullId)) {
-      selectedAnswer =  answersMap.get(currentPullId);
-    }
-    
-  }
 
   const handleOnCheckChange = (e) => {
     console.log(e.target.value);
@@ -87,7 +67,10 @@ const PollDetails = (props) => {
           disabled={answered}
           onChange={handleOnCheckChange}
           id="cb-optionOne"
-          checked={isChecked}
+          style={{
+            borderColor: "green",
+            borderWidth: myAnswer === currentPoll.optionOne.text ? "5px" : "0",
+          }}
         />
         <span>{currentPoll.optionOne.text}</span>
         {answered ? (
@@ -109,6 +92,10 @@ const PollDetails = (props) => {
           disabled={answered}
           onChange={handleOnCheckChange}
           id="cb-optionTwo"
+          style={{
+            borderColor: "green",
+            borderWidth: myAnswer === currentPoll.optionTwo.text ? "5px" : "0",
+          }}
         />
         <span>{currentPoll.optionTwo.text}</span>
         {answered ? (

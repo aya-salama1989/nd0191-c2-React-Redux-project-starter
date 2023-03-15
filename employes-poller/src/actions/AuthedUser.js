@@ -9,6 +9,3 @@ export function setAuthedUser(id){
 }
 
 
-export function getAuthedUser(){
-    //TODO: set authed user from UI component
-}

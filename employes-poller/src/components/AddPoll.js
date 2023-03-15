@@ -2,8 +2,6 @@ import { useState } from "react";
 import { handleAddPoll } from "../actions/Polls";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { generateUID } from "../utils/helpers";
-import {getCurrentTimestamp} from "../utils/helpers";
 
 // Validations if empty show ErrorResponse,
 // validations if exceeded the limit show console.error();
