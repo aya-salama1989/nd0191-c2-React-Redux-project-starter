@@ -1,39 +1,5 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-
-export function formatQuestion({ optionOneText, optionTwoText, author }) {
-  return {
-    id: generateUID(),
-    timestamp: Date.now(),
-    author,
-    optionOne: {
-      votes: [],
-      text: optionOneText,
-    },
-    optionTwo: {
-      votes: [],
-      text: optionTwoText,
-    },
-  };
-}
-export function generateUID() {
-  return (
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15)
-  );
-}
-
-export function formatDate(timestamp) {
-  const d = new Date(timestamp);
-  const time = d.toLocaleTimeString("en-US");
-  return time.substring(0, 5) + time.slice(-2) + " | " + d.toLocaleDateString();
-}
-
-export function getCurrentTimestamp () {
-  return Date.now()
-}
-
-
 export const withRouter = (Component) => {
   const ComponentWithRouterProp = (props) => {
     let location = useLocation();
@@ -44,3 +10,13 @@ export const withRouter = (Component) => {
 
   return ComponentWithRouterProp;
 };
+
+export function formatDate(timestamp) {
+  const d = new Date(timestamp);
+  const time = d.toLocaleTimeString("en-US");
+  return time.substring(0, 5) + time.slice(-2) + " | " + d.toLocaleDateString();
+}
+
+export function getCurrentTimestamp () {
+  return Date.now()
+}

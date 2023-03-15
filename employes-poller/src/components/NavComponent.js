@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setAuthedUser } from "../actions/AuthedUser";
 
-const NavComponent = () => {
-
-  const handleLogOut =()=>{
-    //TODO: set user to null
-    console.log("log out user");
-  }
+const NavComponent = (props) => {
+  const handleLogOut = () => {
+    if (props.authedUser != null) {
+      props.dispatch(setAuthedUser(null));
+    }
+  };
 
   return (
     <nav>
@@ -20,12 +22,17 @@ const NavComponent = () => {
           <Link to="/leaderboard">Leaders Board</Link>
         </li>
         <li>
-          {" "}
-          <Link to="/login" onClick={handleLogOut}>Log out</Link>
+          <Link to="/login" onClick={handleLogOut}>
+            Log out
+          </Link>
         </li>
       </ul>
     </nav>
   );
 };
 
-export default NavComponent;
+const mapStateToProps = ({ authedUser }) => {
+  return { authedUser };
+};
+
+export default connect(mapStateToProps)(NavComponent);

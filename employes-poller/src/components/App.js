@@ -9,30 +9,35 @@ import AddPoll from "./AddPoll";
 import Leaders from "./Leaders";
 import Login from "./Login";
 
+
+
 function App(props) {
 
   useEffect(() => {
     props.dispatch(handleInitialData());
   });
 
-  return props.loading === true ? (
-    <Login />
-  ) : (
+
+
+  return (
     <Fragment>
       <LoadingBar />
       <div className="container">
-        <Routes>
-          <Route path="/" exact element={<PollsList />} />
-          <Route path="/poll/:id" element={<PollDetails />} />
-          <Route path="/add" element={<AddPoll />} />
-          <Route path="/leaderboard" element={<Leaders />} />
-          <Route path="/login" exact element={<Login />} />
-        </Routes>
+        {props.loading === true? null : (
+          <Routes>
+            <Route path="/" exact element={<PollsList />} />
+            <Route path="/poll/:id" element={<PollDetails />} />
+            <Route path="/add" element={<AddPoll />} />
+            <Route path="/leaderboard" element={<Leaders />} />
+            <Route path="/login" exact element={<Login />} />
+          </Routes>
+        )}
       </div>
     </Fragment>
   );
 }
 
-const mapStateToProps = ({ authedUser }) => ({ loading: authedUser === null });
+const mapStateToProps = ({ authedUser }) => (
+  { loading: authedUser === null });
 
 export default connect(mapStateToProps)(App);

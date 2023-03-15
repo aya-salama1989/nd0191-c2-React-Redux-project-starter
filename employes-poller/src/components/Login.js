@@ -9,10 +9,6 @@ const Login = (props) => {
   const [userName, setUserName] = useState("");
   const [password, setUserPassword] = useState("");
 
-  // useEffect(() => {
-  //   props.dispatch(setAuthedUser("sarahedo"))
-  // });
-
   const handleLogIn = (e) => {
     e.preventDefault();
 
@@ -27,7 +23,7 @@ const Login = (props) => {
     } else {
       document.getElementById("errorMessage").textContent = "";
 
-      setAuthedUser(autheduser[0].id);
+      props.dispatch(setAuthedUser(autheduser[0].id));
       navigate("/");
     }
   };

@@ -1,4 +1,3 @@
-import {formatQuestion} from "./helpers"
 
 let users = {
   sarahedo: {
@@ -143,7 +142,6 @@ export function _getQuestions () {
 }
 
 
-
 export function _saveQuestion (question) {
   return new Promise((resolve, reject) => {
     if (!question.optionOneText || !question.optionTwoText || !question.author) {
@@ -194,4 +192,27 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
       resolve(true)
     }, 500)
   })
+}
+
+
+export function formatQuestion({ optionOneText, optionTwoText, author }) {
+  return {
+    id: generateUID(),
+    timestamp: Date.now(),
+    author,
+    optionOne: {
+      votes: [],
+      text: optionOneText,
+    },
+    optionTwo: {
+      votes: [],
+      text: optionTwoText,
+    },
+  };
+}
+export function generateUID() {
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  );
 }
