@@ -21,8 +21,9 @@ const Login = (props) => {
       document.getElementById("errorMessage").textContent =
         "Invalide user Log In";
     } else {
-      document.getElementById("errorMessage").textContent = "";
       props.dispatch(setAuthedUser(autheduser[0].id));
+      document.getElementById("errorMessage").textContent = "";
+
       navigate("/");
     }
   };

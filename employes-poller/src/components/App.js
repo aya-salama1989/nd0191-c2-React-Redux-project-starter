@@ -11,6 +11,7 @@ import Leaders from "./Leaders";
 import Login from "./Login";
 
 function App(props) {
+
   useEffect(() => {
     props.dispatch(handleInitialData());
   });
@@ -25,10 +26,10 @@ function App(props) {
               path="/"
               exact
               element={
-                props.authedUser != null ? (
-                  <PollsList />
-                ) : (
+                props.authedUser === null || props.authedUser === undefined ? (
                   <Navigate to="/login" />
+                ) : (
+                  <PollsList />
                 )
               }
             />
