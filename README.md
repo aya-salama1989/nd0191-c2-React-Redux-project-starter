@@ -4,7 +4,13 @@ This is a final assessment project for Udacity's React & Redux course.
 
 ## How to run the project
 
+1) Clone or download the project to your locale machine
+2) Run npm install in the project root directory to install dependencies
+3) Run npm start to launch the project
 
+## Login 
+* Use one of the users available in users boject in `_DATA.js` file
+* use name and password to login
 
 
 ## Data
