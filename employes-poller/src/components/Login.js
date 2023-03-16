@@ -8,21 +8,19 @@ const Login = (props) => {
 
   const [userName, setUserName] = useState("");
   const [password, setUserPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const autheduser = Object.values(props.users).filter((user) => {
+    return user.name === userName && user.password === password;
+  });
 
   const handleLogIn = (e) => {
     e.preventDefault();
-
-    const autheduser = Object.values(props.users).filter((user) => {
-      console.log("za user is:", user);
-      return user.name === userName && user.password === password;
-    });
-
-    if (autheduser.length === 0) {
-      document.getElementById("errorMessage").textContent =
-        "Invalide user Log In";
+    if (!autheduser || userName === "" || password === "") {
+      setErrorMessage("Invalide user Log In");
     } else {
       props.dispatch(setAuthedUser(autheduser[0].id));
-      document.getElementById("errorMessage").textContent = "";
+      setErrorMessage("");
       navigate("/");
     }
   };
@@ -62,7 +60,9 @@ const Login = (props) => {
           type="submit"
           className="login-form-input"
         />
-        <span id="errorMessage" style={{ color: "red" }}></span>
+        <span id="errorMessage" style={{ color: "red" }}>
+          {errorMessage}
+        </span>
       </form>
     </div>
   );

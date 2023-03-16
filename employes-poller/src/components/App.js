@@ -15,34 +15,26 @@ function App(props) {
     props.dispatch(handleInitialData());
   });
 
+  console.log("Apps props.authedUser", props.authedUser)
+
   return (
     <Fragment>
+      {console.log("Apps props.authedUser", props.authedUser)}
       <LoadingBar />
-      <div className="container">
-        {props.loading === true ? null : (
-          <Routes>
-            <Route
-              path="/"
-              exact
-              element={
-                props.authedUser === null || props.authedUser === undefined ? (
-                  <Navigate to="/login" />
-                ) : (
-                  <PollsList />
-                )
-              }
-            />
-            <Route path="/poll/:id" element={<PollDetails />} />
-            <Route path="/add" element={<AddPoll />} />
-            <Route path="/leaderboard" element={<Leaders />} />
-            <Route path="/login" exact element={<Login />} />
-          </Routes>
-        )}
-      </div>
+      <Routes>
+        props.authedUser === null || props.authedUser === undefined ? (
+        <Route path="/" element={<Navigate to="/login" />} />
+        ) : (
+        <Route path="/" exact element={<PollsList />} />
+        <Route path="/poll/:id" element={<PollDetails />} />
+        <Route path="/add" element={<AddPoll />} />
+        <Route path="/leaderboard" element={<Leaders />} />
+        <Route path="/login" exact element={<Login />} />)
+      </Routes>
     </Fragment>
   );
 }
 
-const mapStateToProps = ({ authedUser }) => ({ loading: authedUser === null });
+const mapStateToProps = ({ authedUser }) => ({ authedUser });
 
 export default connect(mapStateToProps)(App);
