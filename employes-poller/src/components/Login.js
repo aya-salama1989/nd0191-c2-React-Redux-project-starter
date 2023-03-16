@@ -23,7 +23,6 @@ const Login = (props) => {
     } else {
       props.dispatch(setAuthedUser(autheduser[0].id));
       document.getElementById("errorMessage").textContent = "";
-
       navigate("/");
     }
   };

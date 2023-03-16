@@ -11,7 +11,6 @@ import Leaders from "./Leaders";
 import Login from "./Login";
 
 function App(props) {
-
   useEffect(() => {
     props.dispatch(handleInitialData());
   });
@@ -22,17 +21,7 @@ function App(props) {
       <div className="container">
         {props.loading === true ? null : (
           <Routes>
-            <Route
-              path="/"
-              exact
-              element={
-                props.authedUser === null || props.authedUser === undefined ? (
-                  <Navigate to="/login" />
-                ) : (
-                  <PollsList />
-                )
-              }
-            />
+            <Route path="/" exact element={<PollsList />} />
             <Route path="/poll/:id" element={<PollDetails />} />
             <Route path="/add" element={<AddPoll />} />
             <Route path="/leaderboard" element={<Leaders />} />
@@ -43,6 +32,12 @@ function App(props) {
     </Fragment>
   );
 }
+
+// props.authedUser === null || props.authedUser === undefined ? (
+//   <Navigate to="/login" />
+// ) : (
+//   <PollsList />
+// )
 
 const mapStateToProps = ({ authedUser }) => ({ loading: authedUser === null });
 

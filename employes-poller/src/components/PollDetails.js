@@ -51,6 +51,7 @@ const PollDetails = (props) => {
 
   const handleOnCheckChange = (e) => {
     console.log(e.target.value);
+    e.target.checked = true;
     //onHandleCheck, show statistics and disable user interaction
   };
 
@@ -64,20 +65,14 @@ const PollDetails = (props) => {
         <input
           type="checkbox"
           value="optionOne"
-          disabled={answered}
+          checked={answered && myAnswer === "optionOne"}
           onChange={handleOnCheckChange}
           id="cb-optionOne"
-          style={{
-            borderColor: "green",
-            borderWidth: myAnswer === currentPoll.optionOne.text ? "5px" : "0",
-          }}
         />
         <span>{currentPoll.optionOne.text}</span>
         {answered ? (
-          <span
-            className="span-statistic"
-            style={{ display: answered ? "block" : "none" }}
-          >
+          <span className="span-statistic"
+            style={{ display: answered ? "block" : "none" }}>
             , answered by {currentPoll.optionOne.votes.length} users,{" "}
             {optionOneVotesPercentage}% of all users
           </span>
@@ -89,13 +84,9 @@ const PollDetails = (props) => {
         <input
           type="checkbox"
           value="optionTwo"
-          disabled={answered}
+          checked={answered && myAnswer === "optionTwo"}
           onChange={handleOnCheckChange}
           id="cb-optionTwo"
-          style={{
-            borderColor: "green",
-            borderWidth: myAnswer === currentPoll.optionTwo.text ? "5px" : "0",
-          }}
         />
         <span>{currentPoll.optionTwo.text}</span>
         {answered ? (

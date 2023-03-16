@@ -14,15 +14,13 @@ const Leaders = (props) => {
 };
 
 const mapStateToProps = ({ users }) => {
-  const rankedUsers = users
-  
-  // Object.values(users).sort((user1, user2) => {
-  //   const secondUserRank =
-  //     Object.keys(user2.answers).length + user2.questions.size;
-  //   const firstUserRank =
-  //     Object.keys(user1.answers).length + user1.questions.size;
-  //   return  secondUserRank > firstUserRank;
-  // });
+  const rankedUsers = Object.values(users).sort((user1, user2) => {
+    const secondUserRank =
+      Object.keys(user2.answers).length + user2.questions.length;
+    const firstUserRank =
+      Object.keys(user1.answers).length + user1.questions.length;
+    return secondUserRank - firstUserRank;
+  });
 
   return {
     rankedUsers,
