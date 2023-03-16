@@ -28,10 +28,10 @@ const PollsList = (props) => {
     <div>
       <NavComponent />
       <div className="tab">
-        <button className="tablinks" onClick={showAnsweredPolls}>
+        <button className="tablinks" onClick={showAnsweredPolls} data-testid='answered-polls-test-id' >
           Answered Polls
         </button>
-        <button className="tablinks" onClick={showUnAnsweredPolls}>
+        <button className="tablinks" onClick={showUnAnsweredPolls} data-testid='unanswered-polls-test-id'>
           UnAnswered Polls
         </button>
       </div>
