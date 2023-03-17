@@ -1,6 +1,4 @@
 import { _saveQuestion, _saveQuestionAnswer } from "../utils/_DATA";
-// import { saveQuestion } from "../utils/api";
-// import { _saveQuestionAnswer } from "../utils/_DATA";
 
 describe("_saveQuestion", () => {
   it("will return success if a question in the desired foramat is passed", async () => {

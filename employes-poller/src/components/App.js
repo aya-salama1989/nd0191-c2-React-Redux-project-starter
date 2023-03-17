@@ -4,7 +4,6 @@ import { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { LoadingBar } from "react-redux-loading-bar";
 import { Route, Routes } from "react-router";
-import { Navigate } from "react-router-dom";
 import PollDetails from "./PollDetails";
 import AddPoll from "./AddPoll";
 import Leaders from "./Leaders";
@@ -15,21 +14,23 @@ function App(props) {
     props.dispatch(handleInitialData());
   });
 
-  console.log("Apps props.authedUser", props.authedUser)
+  console.log("Apps props.authedUser", props.authedUser);
 
   return (
     <Fragment>
       {console.log("Apps props.authedUser", props.authedUser)}
       <LoadingBar />
       <Routes>
-        props.authedUser === null || props.authedUser === undefined ? (
-        <Route path="/" element={<Navigate to="/login" />} />
+        {props.authedUser === null || props.authedUser === undefined ? (
+          <Route path="/" element={<Login />} />
         ) : (
-        <Route path="/" exact element={<PollsList />} />
-        <Route path="/poll/:id" element={<PollDetails />} />
-        <Route path="/add" element={<AddPoll />} />
-        <Route path="/leaderboard" element={<Leaders />} />
-        <Route path="/login" exact element={<Login />} />)
+          <>
+            <Route path="/" exact element={<PollsList />} />
+            <Route path="/poll/:id" element={<PollDetails />} />
+            <Route path="/add" element={<AddPoll />} />
+            <Route path="/leaderboard" element={<Leaders />} />
+          </>
+        )}
       </Routes>
     </Fragment>
   );

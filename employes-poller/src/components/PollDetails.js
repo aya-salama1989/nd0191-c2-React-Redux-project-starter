@@ -16,9 +16,18 @@ import { useState, useEffect } from "react";
 import { withRouter } from "../utils/helpers";
 import Error from "./Error";
 
+import { setUserAnswer } from "../actions/Users";
+
 const PollDetails = (props) => {
   const [myAnswer, setMyAnswer] = useState(null);
 
+  const currentPoll = props.polls[props.pollId];
+  const pollCreator = props.users[currentPoll.author];
+
+  const authedUserData = props.users[props.authedUser];
+  const answered = Object.keys(authedUserData.answers).includes(currentPoll.id);
+
+  console.log(props.users);
   useEffect(() => {
     const answersMap = new Map();
     if (answered) {
@@ -28,13 +37,7 @@ const PollDetails = (props) => {
     }
     const userAnswer = answersMap.get(currentPoll.id);
     setMyAnswer(userAnswer);
-  }, []);
-
-  const currentPoll = props.polls[props.pollId];
-  const pollCreator = props.users[currentPoll.author];
-
-  const authedUserData = props.users[props.authedUser];
-  const answered = Object.keys(authedUserData.answers).includes(currentPoll.id);
+  }, [authedUserData.answers, answered, currentPoll.id]);
 
   if (currentPoll === null || currentPoll === undefined) {
     return <Error />;
@@ -50,9 +53,10 @@ const PollDetails = (props) => {
   );
 
   const handleOnCheckChange = (e) => {
-    console.log(e.target.value);
-    e.target.checked = true;
     //onHandleCheck, show statistics and disable user interaction
+    console.log(e.target.value);
+    if (answered) return;
+    props.setUserAnswer(props.authedUser, props.pollId, e.target.value);
   };
 
   return (
@@ -71,8 +75,10 @@ const PollDetails = (props) => {
         />
         <span>{currentPoll.optionOne.text}</span>
         {answered ? (
-          <span className="span-statistic"
-            style={{ display: answered ? "block" : "none" }}>
+          <span
+            className="span-statistic"
+            style={{ display: answered ? "block" : "none" }}
+          >
             , answered by {currentPoll.optionOne.votes.length} users,{" "}
             {optionOneVotesPercentage}% of all users
           </span>
@@ -102,6 +108,14 @@ const PollDetails = (props) => {
   );
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    // dispatching plain actions
+    setUserAnswer: (userId, pollId, answer) =>
+      dispatch(setUserAnswer(userId, pollId, answer)),
+  };
+};
+
 const mapStateToProps = ({ users, polls, authedUser }, props) => {
   const pollId = props.router.params.id;
 
@@ -113,4 +127,6 @@ const mapStateToProps = ({ users, polls, authedUser }, props) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(PollDetails));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PollDetails)
+);
