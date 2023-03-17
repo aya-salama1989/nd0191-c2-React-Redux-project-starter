@@ -1,3 +1,4 @@
+import { func } from "prop-types"
 
 let users = {
   sarahedo: {

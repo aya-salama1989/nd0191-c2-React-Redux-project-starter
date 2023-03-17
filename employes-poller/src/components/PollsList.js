@@ -26,7 +26,6 @@ const PollsList = (props) => {
 
   return (
     <div>
-      <NavComponent />
       <div className="tab">
         <button className="tablinks" onClick={showAnsweredPolls} data-testid='answered-polls-test-id' >
           Answered Polls
@@ -55,6 +54,8 @@ const PollsList = (props) => {
 
 const mapStateToProps = ({ polls, authedUser, users }) => {
   const user = users[authedUser];
+
+  console.log("ady updated user", user);
   const authedUserAnsweredPolls = Object.keys(user.answers);
   const sortedPolls = Object.keys(polls).sort((a, b) => {
     return polls[b].timestamp - polls[a].timestamp;

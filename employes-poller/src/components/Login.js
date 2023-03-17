@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { setAuthedUser } from "../actions/AuthedUser";
 import { connect } from "react-redux";
 
 const Login = (props) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [userName, setUserName] = useState("");
   const [password, setUserPassword] = useState("");
@@ -35,6 +36,14 @@ const Login = (props) => {
       console.log("autheduser: ", autheduser);
       props.dispatch(setAuthedUser(autheduser[0].id));
       setErrorMessage("success");
+      console.log(location.pathname);
+      //TODO: reviewer please try the function and notice the behvior,
+      // wish I understood your suggessions properly!
+      // navigate(location === null ? "/" : location.path);
+
+      //pathname always redireccts back to login
+      // navigate(location === null ? "/" : location.pathname);
+
       navigate("/");
     }
   };

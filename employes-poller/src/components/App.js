@@ -8,6 +8,7 @@ import PollDetails from "./PollDetails";
 import AddPoll from "./AddPoll";
 import Leaders from "./Leaders";
 import Login from "./Login";
+import NavComponent from "./NavComponent";
 
 function App(props) {
   useEffect(() => {
@@ -18,7 +19,7 @@ function App(props) {
 
   return (
     <Fragment>
-      {console.log("Apps props.authedUser", props.authedUser)}
+      {props.authedUser === null || props.authedUser === undefined ? null:(<NavComponent/>)}
       <LoadingBar />
       <Routes>
         {props.authedUser === null || props.authedUser === undefined ? (
@@ -26,7 +27,7 @@ function App(props) {
         ) : (
           <>
             <Route path="/" exact element={<PollsList />} />
-            <Route path="/poll/:id" element={<PollDetails />} />
+            <Route path="/questions/:id" element={<PollDetails />} />
             <Route path="/add" element={<AddPoll />} />
             <Route path="/leaderboard" element={<Leaders />} />
           </>

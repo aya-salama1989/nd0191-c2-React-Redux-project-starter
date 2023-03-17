@@ -1,5 +1,7 @@
 export const GET_USERS ="GET_ALL_USERS";
-export const GET_USER_ANSWER ="GET_USER_ANSWER";
+export const SET_USER_ANSWER ="GET_USER_ANSWER";
+export const UPDATE_USER_QUESTIONS ="UPDATE_USER_QUESTIONS";
+
 
 
 export function getUsers(users){
@@ -10,7 +12,14 @@ export function getUsers(users){
 }
 export function setUserAnswer(userId, pollId, answer){
     return{
-        type: GET_USER_ANSWER,
+        type: SET_USER_ANSWER,
         userId, pollId, answer
     }
+}
+
+export function updateUserQuestions (pollId, userId){
+    return{
+        type: UPDATE_USER_QUESTIONS,
+        pollId, userId
+    } 
 }
