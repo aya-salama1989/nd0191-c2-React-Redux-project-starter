@@ -22,7 +22,7 @@ function App(props) {
       <LoadingBar />
       <Routes>
         {props.authedUser === null || props.authedUser === undefined ? (
-          <Route path="/" element={<Login />} />
+          <Route path="*" element={<Login />} />
         ) : (
           <>
             <Route path="/" exact element={<PollsList />} />

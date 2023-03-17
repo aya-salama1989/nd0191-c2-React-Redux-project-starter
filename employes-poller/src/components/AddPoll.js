@@ -3,12 +3,8 @@ import { handleAddPoll } from "../actions/Polls";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-// Validations if empty show ErrorResponse,
-// validations if exceeded the limit show console.error();
-
 const AddPoll = ({ dispatch, authedUser }) => {
-
-  console.log("dispatch: ",dispatch.action);
+  console.log("dispatch: ", dispatch.action);
 
   const navigate = useNavigate();
 
@@ -29,15 +25,13 @@ const AddPoll = ({ dispatch, authedUser }) => {
   const handleAddNewPoll = (e) => {
     e.preventDefault();
 
-
     const newPoll = {
       author: authedUser,
       optionOneText: firstOptionText,
-      optionTwoText: secondOptionText
+      optionTwoText: secondOptionText,
     };
 
     console.log("e.value: ", newPoll);
-
 
     dispatch(handleAddPoll(newPoll));
 
@@ -46,6 +40,14 @@ const AddPoll = ({ dispatch, authedUser }) => {
 
     navigate("/");
   };
+
+  const validInputs =
+    firstOptionText === null ||
+    firstOptionText === "" ||
+    firstOptionText === undefined ||
+    secondOptionText === null ||
+    secondOptionText === "" ||
+    secondOptionText === undefined;
   return (
     <div>
       <form onSubmit={handleAddNewPoll}>
@@ -73,6 +75,7 @@ const AddPoll = ({ dispatch, authedUser }) => {
         <input
           className="add-poll-input"
           type="submit"
+          disabled={validInputs}
           value={"Add new Poll"}
         />
       </form>

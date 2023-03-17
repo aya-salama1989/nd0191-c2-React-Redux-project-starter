@@ -6,9 +6,12 @@ export default function polls(state = {}, action) {
       return { ...state, ...action.polls };
 
     case CREATE_POLL:
+      console.log(" ...state[action.userId]", action.userId);
       return {
         ...state,
-        ...action.poll,
+        [action.poll.id]: {
+          ...action.poll,
+        }
       };
     default:
       return state;

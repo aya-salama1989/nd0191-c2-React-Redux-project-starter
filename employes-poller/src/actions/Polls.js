@@ -12,19 +12,19 @@ export function getPolls(polls) {
 }
 
 export function handleAddPoll(poll) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(showLoading);
     savePoll(poll)
       .then((poll) => {
-        dispatch(createPoll(poll.id));
+        dispatch(createPoll(poll));
       })
       .then(() => dispatch(hideLoading));
   };
 }
 
-function createPoll(pollId) {
+function createPoll(poll) {
   return {
     type: CREATE_POLL,
-    pollId,
+    poll,
   };
 }
