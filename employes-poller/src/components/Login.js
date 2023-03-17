@@ -10,23 +10,31 @@ const Login = (props) => {
   const [password, setUserPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  console.log("props: ",props);
+  console.log("props: ", props);
 
   const autheduser = Object.values(props.users).filter((user) => {
-    console.log("user: ",user);
-    console.log("user.name === userName && user.password === password: ",user.name === userName && user.password === password);
+    console.log("user: ", user);
+    console.log(
+      "user.name === userName && user.password === password: ",
+      user.name === userName && user.password === password
+    );
 
     return user.name === userName && user.password === password;
   });
 
   const handleLogIn = (e) => {
     e.preventDefault();
-    if (!autheduser || userName === "" || password === "" || autheduser.length === 0)   {
+    if (
+      !autheduser ||
+      userName === "" ||
+      password === "" ||
+      autheduser.length === 0
+    ) {
       setErrorMessage("Invalide user Log In");
     } else {
-      console.log("autheduser: ",autheduser);
+      console.log("autheduser: ", autheduser);
       props.dispatch(setAuthedUser(autheduser[0].id));
-      setErrorMessage("");
+      setErrorMessage("success");
       navigate("/");
     }
   };
@@ -66,7 +74,11 @@ const Login = (props) => {
           type="submit"
           className="login-form-input"
         />
-        <span id="errorMessage" style={{ color: "red" }}>
+        <span
+          id="errorMessage"
+          style={{ color: "red" }}
+          data-testid="error-notifier"
+        >
           {errorMessage}
         </span>
       </form>

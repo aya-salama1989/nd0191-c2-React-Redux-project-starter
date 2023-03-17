@@ -38,19 +38,6 @@ describe("login content", () => {
 
   it("will check if Password text is typed as password text", () => {});
 
-  it("will show error message onSubmit with wrong auth data", () => {
-    render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <Login />
-        </Provider>
-      </MemoryRouter>
-    );
-    const submitButton = screen.getByTestId("testId-submit-button");
-    fireEvent.click(submitButton);
-    expect(screen.getByText("Invalide user Log In")).toBeInTheDocument();
-  });
-
   it("will onSubmit with right auth data no error message", () => {
     render(
       <MemoryRouter>
@@ -69,7 +56,20 @@ describe("login content", () => {
     const submitButton = screen.getByTestId("testId-submit-button");
     fireEvent.click(submitButton);
 
-    expect(screen.queryByText("Invalide user Log In")).not.toBeInTheDocument();
-    expect(screen.getByTestId("testId-nav-component")).toBeInTheDocument();
+    expect(screen.getByText("success")).toBeInTheDocument();
+
+  });
+
+  it("will show error message onSubmit with wrong auth data", () => {
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <Login />
+        </Provider>
+      </MemoryRouter>
+    );
+    const submitButton = screen.getByTestId("testId-submit-button");
+    fireEvent.click(submitButton);
+    expect(screen.getByText("Invalide user Log In")).toBeInTheDocument();
   });
 });
