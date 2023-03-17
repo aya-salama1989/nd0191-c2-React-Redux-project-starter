@@ -10,9 +10,9 @@ describe("login", () => {
   it("will return a snapshot", () => {
     const view = render(
       <MemoryRouter>
-      <Provider store={store}>
-        <Login />
-      </Provider>
+        <Provider store={store}>
+          <Login />
+        </Provider>
       </MemoryRouter>
     );
     expect(view).toMatchSnapshot();
@@ -21,11 +21,13 @@ describe("login", () => {
 
 describe("login content", () => {
   it("will pass if all Dom items exists", () => {
-    render( <MemoryRouter>
-      <Provider store={store}>
-        <Login />
-      </Provider>
-      </MemoryRouter>);
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <Login />
+        </Provider>
+      </MemoryRouter>
+    );
     const nameInput = screen.queryByTestId("testId-name-input");
     const passwrodInput = screen.queryByTestId("testId-password-input");
     const submitButton = screen.queryByTestId("testId-submit-button");
@@ -37,17 +39,37 @@ describe("login content", () => {
   it("will check if Password text is typed as password text", () => {});
 
   it("will show error message onSubmit with wrong auth data", () => {
-    render( <MemoryRouter>
-      <Provider store={store}>
-        <Login />
-      </Provider>
-      </MemoryRouter>);
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <Login />
+        </Provider>
+      </MemoryRouter>
+    );
     const submitButton = screen.getByTestId("testId-submit-button");
     fireEvent.click(submitButton);
     expect(screen.getByText("Invalide user Log In")).toBeInTheDocument();
   });
 
-  it("will onSubmit with right auth data", () => {
-    //navigate to dashboard
+  it("will onSubmit with right auth data no error message", () => {
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <Login />
+        </Provider>
+      </MemoryRouter>
+    );
+
+    const userNameInput = screen.getByTestId("testId-name-input");
+    fireEvent.change(userNameInput, { target: { value: "Zenobia Oshikanlu" } });
+
+    const passwordInput = screen.getByTestId("testId-password-input");
+    fireEvent.change(passwordInput, { target: { value: "pass246" } });
+
+    const submitButton = screen.getByTestId("testId-submit-button");
+    fireEvent.click(submitButton);
+
+    expect(screen.queryByText("Invalide user Log In")).not.toBeInTheDocument();
+    expect(screen.getByTestId("testId-nav-component")).toBeInTheDocument();
   });
 });

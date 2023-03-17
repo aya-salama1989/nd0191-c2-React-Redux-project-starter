@@ -10,7 +10,7 @@ const NavComponent = (props) => {
   };
 
   return (
-    <nav>
+    <nav data-testid="testId-nav-component">
       <ul className="no-bullets">
         <li>
           <Link to="/">Home</Link>
