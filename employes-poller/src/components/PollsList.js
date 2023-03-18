@@ -1,36 +1,62 @@
-//TODO: add two different tabs and
-//filter queastions list on click answered and not answered
-
 import { connect } from "react-redux";
 import PollItem from "./PollItem";
 import { useState } from "react";
-import NavComponent from "./NavComponent";
 
 const PollsList = (props) => {
-  const [polls, setPolls] = useState(props.unAnsweredPolls);
+  console.log("ady updated user", props.user);
+  console.log("ady updated polls", props.polls);
 
-  console.log("answeredPolls: ", props.answeredPolls);
-  console.log("unAnsweredPolls: ", props.unAnsweredPolls);
+  const authedUserAnsweredPolls = Object.keys(props.user.answers);
+
+  console.log("authedUserAnsweredPollsr", authedUserAnsweredPolls);
+
+  const answeredPolls = Object.keys(props.polls)
+    .sort((a, b) => {
+      return props.polls[b].timestamp - props.polls[a].timestamp;
+    })
+    .filter((pollId) => authedUserAnsweredPolls.includes(pollId));
+
+  console.log("answeredPolls: ", answeredPolls);
+
+
+  const unAnsweredPolls = Object.keys(props.polls)
+    .sort((a, b) => {
+      return props.polls[b].timestamp - props.polls[a].timestamp;
+    })
+    .filter((pollId) => {
+      return !authedUserAnsweredPolls.includes(pollId);;
+    });
+
+    const [polls, setPolls] = useState(unAnsweredPolls);
+
+
+  console.log("unAnsweredPolls: ", unAnsweredPolls);
+
+  console.log("polls: ", polls);
 
   const showAnsweredPolls = () => {
-    setPolls(props.answeredPolls);
+    setPolls(answeredPolls);
   };
 
   const showUnAnsweredPolls = () => {
-    setPolls(props.unAnsweredPolls);
-  };
-
-  const handlePollItemClick = () => {
-    console.log("handlePollItemClick");
+    setPolls(unAnsweredPolls);
   };
 
   return (
     <div>
       <div className="tab">
-        <button className="tablinks" onClick={showAnsweredPolls} data-testid='answered-polls-test-id' >
+        <button
+          className="tablinks"
+          onClick={showAnsweredPolls}
+          data-testid="answered-polls-test-id"
+        >
           Answered Polls
         </button>
-        <button className="tablinks" onClick={showUnAnsweredPolls} data-testid='unanswered-polls-test-id'>
+        <button
+          className="tablinks"
+          onClick={showUnAnsweredPolls}
+          data-testid="unanswered-polls-test-id"
+        >
           UnAnswered Polls
         </button>
       </div>
@@ -38,11 +64,7 @@ const PollsList = (props) => {
       <div className="lists">
         <ul>
           {polls.map((pollId) => (
-            <li
-              key={pollId}
-              className="poll-item"
-              onClick={handlePollItemClick}
-            >
+            <li key={pollId} className="poll-item">
               <PollItem pollId={pollId} />
             </li>
           ))}
@@ -54,20 +76,12 @@ const PollsList = (props) => {
 
 const mapStateToProps = ({ polls, authedUser, users }) => {
   const user = users[authedUser];
-
   console.log("ady updated user", user);
-  const authedUserAnsweredPolls = Object.keys(user.answers);
-  const sortedPolls = Object.keys(polls).sort((a, b) => {
-    return polls[b].timestamp - polls[a].timestamp;
-  });
+  console.log("ady updated polls", polls);
 
   return {
-    answeredPolls: sortedPolls.filter((pollId) =>
-      authedUserAnsweredPolls.includes(pollId)
-    ),
-    unAnsweredPolls: sortedPolls.filter(
-      (pollId) => !authedUserAnsweredPolls.includes(pollId)
-    ),
+    user,
+    polls,
   };
 };
 

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const PollItem = (props) => {
   return (
-    <Link  to={`/poll/${props.pollId}`}  className = "poll-list-item">
+    <Link  to={`/questions/${props.pollId}`}  className = "poll-list-item">
       <h4>{props.pollText} </h4>
       <span>created by: {props.authorName.name}</span>
       <span>creation Date: {props.pollDate}</span>
