@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import PollItem from "./PollItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const PollsList = (props) => {
   const authedUserAnsweredPolls = Object.keys(props.user.answers);
@@ -19,13 +19,21 @@ const PollsList = (props) => {
       return props.polls[b].timestamp - props.polls[a].timestamp;
     });
 
-  const userAddedQuestions = props.user.questions.filter(
-    (quetion) => !unAnsweredPolls.includes(quetion) && !answeredPolls.includes(quetion) 
-  );
+    const [polls, setPolls] = useState(unAnsweredPolls);
 
-  const defaultList = unAnsweredPolls.concat(userAddedQuestions)
 
-  const [polls, setPolls] = useState(defaultList);
+
+    useEffect(() => {
+      const userAddedQuestions = props.user.questions.filter(
+        (quetion) => !unAnsweredPolls.includes(quetion) && !answeredPolls.includes(quetion) 
+      );
+      const defaultList = unAnsweredPolls.concat(userAddedQuestions)
+      setPolls(defaultList);
+
+    },[polls, unAnsweredPolls,answeredPolls, props.user.questions])
+
+
+
 
   const showAnsweredPolls = () => {
     setPolls(answeredPolls);
