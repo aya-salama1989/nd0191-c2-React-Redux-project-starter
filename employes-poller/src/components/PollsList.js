@@ -3,36 +3,25 @@ import PollItem from "./PollItem";
 import { useState } from "react";
 
 const PollsList = (props) => {
-  console.log("ady updated user", props.user);
-  console.log("ady updated polls", props.polls);
 
   const authedUserAnsweredPolls = Object.keys(props.user.answers);
 
-  console.log("authedUserAnsweredPollsr", authedUserAnsweredPolls);
+  console.log("questions: ", props.user.questions);
 
   const answeredPolls = Object.keys(props.polls)
+    .filter((pollId) => authedUserAnsweredPolls.includes(pollId))
     .sort((a, b) => {
       return props.polls[b].timestamp - props.polls[a].timestamp;
-    })
-    .filter((pollId) => authedUserAnsweredPolls.includes(pollId));
-
-  console.log("answeredPolls: ", answeredPolls);
+    });
 
 
   const unAnsweredPolls = Object.keys(props.polls)
+    .filter((pollId) => !authedUserAnsweredPolls.includes(pollId))
     .sort((a, b) => {
       return props.polls[b].timestamp - props.polls[a].timestamp;
-    })
-    .filter((pollId) => {
-      return !authedUserAnsweredPolls.includes(pollId);;
     });
 
-    const [polls, setPolls] = useState(unAnsweredPolls);
-
-
-  console.log("unAnsweredPolls: ", unAnsweredPolls);
-
-  console.log("polls: ", polls);
+  const [polls, setPolls] = useState(unAnsweredPolls);
 
   const showAnsweredPolls = () => {
     setPolls(answeredPolls);
@@ -76,10 +65,8 @@ const PollsList = (props) => {
 
 const mapStateToProps = ({ polls, authedUser, users }) => {
   const user = users[authedUser];
-  console.log("ady updated user", user);
-  console.log("ady updated polls", polls);
-
   return {
+    users,
     user,
     polls,
   };
