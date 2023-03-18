@@ -3,7 +3,6 @@ import PollItem from "./PollItem";
 import { useState } from "react";
 
 const PollsList = (props) => {
-
   const authedUserAnsweredPolls = Object.keys(props.user.answers);
 
   console.log("questions: ", props.user.questions);
@@ -14,14 +13,19 @@ const PollsList = (props) => {
       return props.polls[b].timestamp - props.polls[a].timestamp;
     });
 
-
   const unAnsweredPolls = Object.keys(props.polls)
     .filter((pollId) => !authedUserAnsweredPolls.includes(pollId))
     .sort((a, b) => {
       return props.polls[b].timestamp - props.polls[a].timestamp;
     });
 
-  const [polls, setPolls] = useState(unAnsweredPolls);
+  const userAddedQuestions = props.user.questions.filter(
+    (quetion) => !unAnsweredPolls.includes(quetion) && !answeredPolls.includes(quetion) 
+  );
+
+  const defaultList = unAnsweredPolls.concat(userAddedQuestions)
+
+  const [polls, setPolls] = useState(defaultList);
 
   const showAnsweredPolls = () => {
     setPolls(answeredPolls);
