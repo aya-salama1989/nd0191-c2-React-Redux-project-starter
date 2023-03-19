@@ -10,9 +10,9 @@ const PollDetails = (props) => {
   const [myAnswer, setMyAnswer] = useState(null);
 
   const currentPoll = props?.polls[props.pollId];
-  const pollCreator = props?.users[currentPoll.author];
+  const pollCreator = props?.users[currentPoll?.author];
 
-  const authedUserData = props?.users[props.authedUser];
+  const authedUserData = props?.users[props?.authedUser];
   const answered = Object.keys(authedUserData?.answers).includes(currentPoll?.id);
 
   useEffect(() => {
@@ -22,27 +22,27 @@ const PollDetails = (props) => {
         answersMap.set(key, value);
       }
     }
-    const userAnswer = answersMap.get(currentPoll.id);
+    const userAnswer = answersMap.get(currentPoll?.id);
     setMyAnswer(userAnswer);
-  }, [authedUserData.answers, answered, currentPoll.id]);
+  }, [authedUserData?.answers, answered, currentPoll?.id]);
 
   const totalNumberOfVotes =
-    currentPoll.optionOne.votes.length + currentPoll.optionTwo.votes.length;
+    currentPoll?.optionOne.votes.length + currentPoll?.optionTwo.votes.length;
+
   const optionOneVotesPercentage = Math.round(
-    (currentPoll.optionOne.votes.length / totalNumberOfVotes) * 100
+    (currentPoll?.optionOne.votes.length / totalNumberOfVotes) * 100
   );
+
   const optionTwoVotesPercentage = Math.round(
-    (currentPoll.optionTwo.votes.length / totalNumberOfVotes) * 100
+    (currentPoll?.optionTwo.votes.length / totalNumberOfVotes) * 100
   );
 
   const handleOnCheckChange = (e) => {
-    //onHandleCheck, show statistics and disable user interaction
-    console.log(e.target.value);
     if (answered) return;
     props.setUserAnswer(props.authedUser, props.pollId, e.target.value);
   };
 
-  if (props?.pollId == null) {
+  if (props.error) {
     return (<ErrorPage/>)
    }
  
@@ -61,13 +61,13 @@ const PollDetails = (props) => {
           onChange={handleOnCheckChange}
           id="cb-optionOne"
         />
-        <span>{currentPoll.optionOne.text}</span>
+        <span>{currentPoll?.optionOne.text}</span>
         {answered ? (
           <span
             className="span-statistic"
             style={{ display: answered ? "block" : "none" }}
           >
-            , answered by {currentPoll.optionOne.votes.length} users,{" "}
+            , answered by {currentPoll?.optionOne.votes.length} users,{" "}
             {optionOneVotesPercentage}% of all users
           </span>
         ) : (
@@ -82,10 +82,10 @@ const PollDetails = (props) => {
           onChange={handleOnCheckChange}
           id="cb-optionTwo"
         />
-        <span>{currentPoll.optionTwo.text}</span>
+        <span>{currentPoll?.optionTwo.text}</span>
         {answered ? (
           <span className="span-statistic">
-            , answered by {currentPoll.optionTwo.votes.length} users,{" "}
+            , answered by {currentPoll?.optionTwo.votes.length} users,{" "}
             {optionTwoVotesPercentage}% of all users{" "}
           </span>
         ) : (
@@ -107,11 +107,16 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = ({ users, polls, authedUser }, props) => {
   const pollId = props.router.params.id;
 
+  const error = !Object.keys(polls).includes(pollId);
+
+  console.log("included: ", error)
+
   return {
     pollId,
     polls,
     users,
     authedUser,
+    error
   };
 };
 
