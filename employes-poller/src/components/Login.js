@@ -36,15 +36,8 @@ const Login = (props) => {
       console.log("autheduser: ", autheduser);
       props.dispatch(setAuthedUser(autheduser[0].id));
       setErrorMessage("success");
-      console.log(location.pathname);
-      //TODO: reviewer please try the function and notice the behvior,
-      // wish I understood your suggessions properly!
-      // navigate(location === null ? "/" : location.path);
-
-      //pathname always redireccts back to login
-      // navigate(location === null ? "/" : location.pathname);
-
-      navigate("/");
+      console.log("location.pathname", location.pathname);
+      navigate(location?.path || "/");
     }
   };
 

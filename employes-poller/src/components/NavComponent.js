@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/AuthedUser";
-import User from "./User";
 
 const NavComponent = (props) => {
   const handleLogOut = () => {
