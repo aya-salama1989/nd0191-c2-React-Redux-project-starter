@@ -57,7 +57,6 @@ describe("login content", () => {
     fireEvent.click(submitButton);
 
     expect(screen.getByText("success")).toBeInTheDocument();
-
   });
 
   it("will show error message onSubmit with wrong auth data", () => {

@@ -1,4 +1,3 @@
-//Poll items question text + author +date of creation
 
 import { connect } from "react-redux";
 import { formatDate } from "../utils/helpers";
@@ -24,7 +23,8 @@ const mapStateToProps = ({ polls, users }, { pollId }) => {
     pollId,
     pollText,
     authorName,
-    pollDate,
+    pollDate
+
   };
 };
 

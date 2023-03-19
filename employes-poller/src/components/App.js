@@ -12,7 +12,6 @@ import NavComponent from "./NavComponent";
 import ErrorPage from "./ErrorPage";
 import { Navigate, useLocation } from "react-router-dom";
 
-
 function App(props) {
   const location = useLocation();
 
@@ -20,28 +19,23 @@ function App(props) {
     props.dispatch(handleInitialData());
   });
 
-  console.log("Apps props.authedUser", props.authedUser);
-
-  console.log("props.authedUser !== null", props.authedUser !== null);
-
   const isUserAuthorized = props.authedUser !== null;
 
   console.log("!isUserAuthorized", !isUserAuthorized);
 
-  function ProtectedRoute ({children})  {
-    return isUserAuthorized? (
+  function ProtectedRoute({ children }) {
+    return isUserAuthorized ? (
       children
     ) : (
-      <Navigate to="/login" replace state={{ path: location.pathname }}/>
+      <Navigate to="/login" replace state={{ path: location.pathname }} />
     );
-  };
+  }
 
   return (
     <Fragment>
       {!isUserAuthorized ? null : <NavComponent />}
       <LoadingBar />
       <Routes>
-
         <Route
           path="/"
           exact
@@ -54,7 +48,7 @@ function App(props) {
         <Route
           path="/questions/:id"
           element={
-            <ProtectedRoute >
+            <ProtectedRoute>
               <PollDetails />
             </ProtectedRoute>
           }
@@ -62,7 +56,7 @@ function App(props) {
         <Route
           path="/add"
           element={
-            <ProtectedRoute >
+            <ProtectedRoute>
               <AddPoll />
             </ProtectedRoute>
           }
@@ -70,14 +64,14 @@ function App(props) {
         <Route
           path="/leaderboard"
           element={
-            <ProtectedRoute >
+            <ProtectedRoute>
               <Leaders />
             </ProtectedRoute>
           }
         />
-        <Route path="*" element={<ErrorPage />} />
         <Route path="/login" element={<Login />} />
 
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Fragment>
   );

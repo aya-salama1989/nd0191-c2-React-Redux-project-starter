@@ -1,20 +1,20 @@
-
 import { connect } from "react-redux";
 import User from "./User";
 import { useState, useEffect } from "react";
 import { withRouter } from "../utils/helpers";
 import { setUserAnswer } from "../actions/Users";
+import ErrorPage from "./ErrorPage";
 
 const PollDetails = (props) => {
+ 
   const [myAnswer, setMyAnswer] = useState(null);
 
-  const currentPoll = props.polls[props.pollId];
-  const pollCreator = props.users[currentPoll.author];
+  const currentPoll = props?.polls[props.pollId];
+  const pollCreator = props?.users[currentPoll.author];
 
-  const authedUserData = props.users[props.authedUser];
-  const answered = Object.keys(authedUserData.answers).includes(currentPoll.id);
+  const authedUserData = props?.users[props.authedUser];
+  const answered = Object.keys(authedUserData?.answers).includes(currentPoll?.id);
 
-  console.log(props.users);
   useEffect(() => {
     const answersMap = new Map();
     if (answered) {
@@ -41,6 +41,11 @@ const PollDetails = (props) => {
     if (answered) return;
     props.setUserAnswer(props.authedUser, props.pollId, e.target.value);
   };
+
+  if (props?.pollId == null) {
+    return (<ErrorPage/>)
+   }
+ 
 
   return (
     <div className="poll-detail">

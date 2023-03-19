@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 const Login = (props) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const {state} = useLocation();
 
   const [userName, setUserName] = useState("");
   const [password, setUserPassword] = useState("");
@@ -36,8 +36,8 @@ const Login = (props) => {
       console.log("autheduser: ", autheduser);
       props.dispatch(setAuthedUser(autheduser[0].id));
       setErrorMessage("success");
-      console.log("location.pathname", location.pathname);
-      navigate(location?.path || "/");
+      console.log("location.pathname", state.pathname);
+      navigate(state?.path || "/");
     }
   };
 
