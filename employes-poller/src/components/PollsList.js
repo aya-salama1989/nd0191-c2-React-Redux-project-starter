@@ -30,7 +30,7 @@ const PollsList = (props) => {
       const defaultList = unAnsweredPolls.concat(userAddedQuestions)
       setPolls(defaultList);
 
-    },[polls, unAnsweredPolls,answeredPolls, props.user.questions])
+    })
 
 
 

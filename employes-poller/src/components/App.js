@@ -9,6 +9,7 @@ import AddPoll from "./AddPoll";
 import Leaders from "./Leaders";
 import Login from "./Login";
 import NavComponent from "./NavComponent";
+import ErrorPage from "./ErrorPage";
 
 function App(props) {
   useEffect(() => {
@@ -30,6 +31,7 @@ function App(props) {
             <Route path="/questions/:id" element={<PollDetails />} />
             <Route path="/add" element={<AddPoll />} />
             <Route path="/leaderboard" element={<Leaders />} />
+            <Route path="*" element={<ErrorPage />} />
           </>
         )}
       </Routes>

@@ -1,4 +1,4 @@
-const Error = () => {
+const ErrorPage = () => {
   return (
     <div>
       <h1>404 Not Available</h1>
@@ -7,4 +7,4 @@ const Error = () => {
   );
 };
 
-export default Error;
+export default ErrorPage;

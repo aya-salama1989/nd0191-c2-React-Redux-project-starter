@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import User from "./User";
 import { useState, useEffect } from "react";
 import { withRouter } from "../utils/helpers";
-import Error from "./Error";
-
 import { setUserAnswer } from "../actions/Users";
 
 const PollDetails = (props) => {
@@ -27,10 +25,6 @@ const PollDetails = (props) => {
     const userAnswer = answersMap.get(currentPoll.id);
     setMyAnswer(userAnswer);
   }, [authedUserData.answers, answered, currentPoll.id]);
-
-  if (currentPoll === null || currentPoll === undefined) {
-    return <Error />;
-  }
 
   const totalNumberOfVotes =
     currentPoll.optionOne.votes.length + currentPoll.optionTwo.votes.length;

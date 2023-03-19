@@ -50,8 +50,8 @@ ul.no-bullets {
 ul.no-bullets li {
   border-radius: 15px;
   display: inline-block;
-  vertical-align: middle;
   margin-right: 1%;
+  width: auto;
 }
 
 
@@ -116,6 +116,8 @@ img{
 .userDataItem{
   display: block;
 }
+
+
 
 
 
