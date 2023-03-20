@@ -3,44 +3,24 @@ import PollItem from "./PollItem";
 import { useState, useEffect } from "react";
 
 const PollsList = (props) => {
-  const authedUserAnsweredPolls = Object.keys(props.user.answers);
+  const [polls, setPolls] = useState(props.unAnsweredPolls);
 
-  console.log("questions: ", props.user.questions);
-
-  const answeredPolls = Object.keys(props.polls)
-    .filter((pollId) => authedUserAnsweredPolls.includes(pollId))
-    .sort((a, b) => {
-      return props.polls[b].timestamp - props.polls[a].timestamp;
-    });
-
-  const unAnsweredPolls = Object.keys(props.polls)
-    .filter((pollId) => !authedUserAnsweredPolls.includes(pollId))
-    .sort((a, b) => {
-      return props.polls[b].timestamp - props.polls[a].timestamp;
-    });
-
-    const [polls, setPolls] = useState(unAnsweredPolls);
-
-
-
-    useEffect(() => {
-      const userAddedQuestions = props.user.questions.filter(
-        (quetion) => !unAnsweredPolls.includes(quetion) && !answeredPolls.includes(quetion) 
-      );
-      const defaultList = unAnsweredPolls.concat(userAddedQuestions)
-      setPolls(defaultList);
-
-    },[props.user.questions])
-
-
-
+  useEffect(() => {
+    const userAddedQuestions = props.userQuestions.filter(
+      (quetion) =>
+        !props.unAnsweredPolls.includes(quetion) &&
+        !props.answeredPolls.includes(quetion)
+    );
+    const defaultList = props.unAnsweredPolls.concat(userAddedQuestions);
+    setPolls(defaultList);
+  }, [props.userQuestions]);
 
   const showAnsweredPolls = () => {
-    setPolls(answeredPolls);
+    setPolls(props.answeredPolls);
   };
 
   const showUnAnsweredPolls = () => {
-    setPolls(unAnsweredPolls);
+    setPolls(props.unAnsweredPolls);
   };
 
   return (
@@ -77,10 +57,29 @@ const PollsList = (props) => {
 
 const mapStateToProps = ({ polls, authedUser, users }) => {
   const user = users[authedUser];
+
+
+  const authedUserAnsweredPolls =
+    (user !== null || user !== undefined) && Object.keys(user.answers);
+
+  const answeredPolls = Object.keys(polls)
+    .filter((pollId) => authedUserAnsweredPolls.includes(pollId))
+    .sort((a, b) => {
+      return polls[b].timestamp - polls[a].timestamp;
+    });
+
+  const unAnsweredPolls = Object.keys(polls)
+    .filter((pollId) => !authedUserAnsweredPolls.includes(pollId))
+    .sort((a, b) => {
+      return polls[b].timestamp - polls[a].timestamp;
+    });
+
+    const userQuestions = user.questions
+
   return {
-    users,
-    user,
-    polls,
+    answeredPolls,
+    unAnsweredPolls,
+    userQuestions
   };
 };
 

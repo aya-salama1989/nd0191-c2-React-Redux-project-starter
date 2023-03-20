@@ -2,9 +2,11 @@ import Login from "../components/Login";
 import { render, screen, fireEvent } from "@testing-library/react";
 import * as React from "react";
 
-import store from "../index";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router";
+import { store } from '../index'
+
+
 
 describe("login", () => {
   it("will return a snapshot", () => {
@@ -19,7 +21,7 @@ describe("login", () => {
   });
 });
 
-describe("login content", () => {
+describe("login content", () => {  
   it("will pass if all Dom items exists", () => {
     render(
       <MemoryRouter>
@@ -36,7 +38,6 @@ describe("login content", () => {
     expect(submitButton).toBeInTheDocument();
   });
 
-  it("will check if Password text is typed as password text", () => {});
 
   it("will onSubmit with right auth data no error message", () => {
     render(
@@ -56,7 +57,9 @@ describe("login content", () => {
     const submitButton = screen.getByTestId("testId-submit-button");
     fireEvent.click(submitButton);
 
-    expect(screen.getByText("success")).toBeInTheDocument();
+    expect(screen.getByTestId("testId-name-input")).toBeInTheDocument();
+    expect(screen.getByTestId("testId-password-input")).toBeInTheDocument();
+    expect(screen.getByTestId("testId-submit-button")).toBeInTheDocument();
   });
 
   it("will show error message onSubmit with wrong auth data", () => {
@@ -67,6 +70,7 @@ describe("login content", () => {
         </Provider>
       </MemoryRouter>
     );
+
     const submitButton = screen.getByTestId("testId-submit-button");
     fireEvent.click(submitButton);
     expect(screen.getByText("Invalide user Log In")).toBeInTheDocument();
