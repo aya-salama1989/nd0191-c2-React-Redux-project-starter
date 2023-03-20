@@ -7,6 +7,7 @@ describe("_saveQuestion", () => {
       optionTwoText: "option 2",
       author: "Aya Salama",
     };
+
     const result = await _saveQuestion(testQuestion);
     expect(result.optionOne.text).toEqual(testQuestion.optionOneText);
     expect(result.optionTwo.text).toEqual(testQuestion.optionTwoText);
@@ -20,7 +21,6 @@ describe("_saveQuestion", () => {
     );
   });
 });
-
 
 describe("_saveQuestionAnswer", () => {
   it("return true when correctly formatted data is passed", async () => {
@@ -39,4 +39,3 @@ describe("_saveQuestionAnswer", () => {
     await expect(_saveQuestionAnswer("dada")).rejects.toEqual(errorMessage);
   });
 });
-

@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import * as React from "react";
 import Leaders from "../components/Leaders";
 
@@ -187,4 +187,20 @@ describe("Leaders", () => {
     );
     expect(view).toMatchSnapshot();
   });
+
+//   it("will return true if ui contains elements", () => {
+//     render(
+//       <MemoryRouter>
+//         <Provider store={mockStore}>
+//           <Leaders />
+//         </Provider>
+//       </MemoryRouter>
+//     );
+//     expect(screen.getByText("Answered Questions:")).toBeInTheDocument();
+//     expect(screen.getByText("Ranking:")).toBeInTheDocument();
+
+//   });
+
+
+
 });

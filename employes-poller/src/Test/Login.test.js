@@ -57,9 +57,9 @@ describe("login content", () => {
     const submitButton = screen.getByTestId("testId-submit-button");
     fireEvent.click(submitButton);
 
-    expect(screen.getByTestId("testId-name-input")).toBeInTheDocument();
-    expect(screen.getByTestId("testId-password-input")).toBeInTheDocument();
-    expect(screen.getByTestId("testId-submit-button")).toBeInTheDocument();
+    expect(userNameInput).toBeInTheDocument();
+    expect(passwordInput).toBeInTheDocument();
+    expect(submitButton).toBeInTheDocument();
   });
 
   it("will show error message onSubmit with wrong auth data", () => {

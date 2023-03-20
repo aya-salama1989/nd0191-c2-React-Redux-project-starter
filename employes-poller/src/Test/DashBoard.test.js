@@ -35,10 +35,10 @@ describe("DashBoard", () => {
         </Provider>
       </MemoryRouter>
     );
-    const answeredTab = screen.getAllByText("Answered Polls");
+    const answeredTab = screen.getByTestId("answered-polls-test-id");
     expect(answeredTab).toBeInTheDocument();
 
-    const unAnsweredTab = screen.getAllByTestId("UnAnswered Polls");
+    const unAnsweredTab = screen.getByTestId("unanswered-polls-test-id");
     expect(unAnsweredTab).toBeInTheDocument();
   });
 });
