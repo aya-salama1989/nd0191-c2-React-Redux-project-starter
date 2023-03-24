@@ -6,20 +6,12 @@ import { connect } from "react-redux";
 const Login = (props) => {
   const navigate = useNavigate();
   const {state} = useLocation();
-
   const [userName, setUserName] = useState("");
   const [password, setUserPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  console.log("props: ", props);
 
   const autheduser = Object.values(props.users).filter((user) => {
-    console.log("user: ", user);
-    console.log(
-      "user.name === userName && user.password === password: ",
-      user.name === userName && user.password === password
-    );
-
     return user.name === userName && user.password === password;
   });
 
@@ -91,3 +83,4 @@ const Login = (props) => {
 const mapStateToProps = (props) => props;
 
 export default connect(mapStateToProps)(Login);
+

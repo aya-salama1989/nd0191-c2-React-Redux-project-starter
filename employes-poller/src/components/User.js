@@ -1,7 +1,6 @@
-//Avatar, name, number of answes and number of questions per user
+import PropTypes from 'prop-types';
 
 const User = ({ userData, ranking }) => {
-  console.log("userData", userData);
   return (
     <div className="mainDiv">
       <div className="third">
@@ -25,5 +24,10 @@ const User = ({ userData, ranking }) => {
     </div> 
   );
 };
+
+User.propTypes = {
+  userData: PropTypes.object.isRequired,
+  ranking: PropTypes.number.isRequired
+}
 
 export default User;

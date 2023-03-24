@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import User from "./User";
+import PropTypes  from 'prop-types'; 
 
 const Leaders = (props) => {
-  console.log(props.rankedUsers);
 
   return (
     <ul>
@@ -28,3 +28,9 @@ const mapStateToProps = ({ users }) => {
 };
 
 export default connect(mapStateToProps)(Leaders);
+
+
+Leaders.prototype ={
+  rankedUsers: PropTypes.string.isRequired
+}
+

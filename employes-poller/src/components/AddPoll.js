@@ -3,12 +3,12 @@ import { handleAddPoll } from "../actions/Polls";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import PropTypes from 'prop-types';
+
 const AddPoll = ({ dispatch, authedUser }) => {
-  console.log("dispatch: ", dispatch.action);
 
   const navigate = useNavigate();
 
-  console.log("authedUser in add poll: ", authedUser);
   const [firstOptionText, setFirstOptionText] = useState("");
   const [secondOptionText, setSecondOptionText] = useState("");
 
@@ -31,8 +31,6 @@ const AddPoll = ({ dispatch, authedUser }) => {
       optionTwoText: secondOptionText,
     };
 
-    console.log("e.value: ", newPoll);
-
     dispatch(handleAddPoll(newPoll));
 
     setFirstOptionText("");
@@ -48,6 +46,7 @@ const AddPoll = ({ dispatch, authedUser }) => {
     secondOptionText === null ||
     secondOptionText === "" ||
     secondOptionText === undefined;
+
   return (
     <div>
       <form onSubmit={handleAddNewPoll}>
@@ -89,5 +88,12 @@ const mapStateToProps = ({ authedUser }) => {
     authedUser,
   };
 };
+
+
+AddPoll.prototype = {
+  authedUser: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired
+}
+
 
 export default connect(mapStateToProps)(AddPoll);
